@@ -1,0 +1,308 @@
+// Traccia attività e classi per progetto "Chi vuol essere Milionario"
+
+////////////////////////
+// Cose da realizzare 
+////////////////////////
+- File domande.txt che contiene 50 domande con 4 risposte e il numero della risposta giusta per ogni domanda. Caricare su Git-Hub.
+- File Readme con la descrizione di come avviare ed utilizzare l'applicazione e di chi ha svolto cosa
+
+///////////////////////////////////
+// Regole per sviluppo progetto
+///////////////////////////////////
+- Ogni componente del gruppo è responsabile dell'implementazione di una classe del progetto.
+- La classe va implementata senza cambiare i nomi della classe, attributi e metodi sotto indicati e dividendo la definizione della
+  classe dall'implementazione dei metodi (Classe.h e Classe.cpp).
+- Eventuali modifiche/correzioni alle classi sotto descritte vanno prima discusse con il gruppo.
+- Ogni componente del gruppo deve provare la classe con un apposito main() che verifichi il funzionamento di tutti i metodi della classe.
+- Chi deve fare le classi che utilizzano le classi realizzate dagli altri compagni implementa tutta la classe ma lascia commentate le parti 
+  che non sono ancora disponibili e, se possibile, prova gli altri metodi.
+- Solo dopo aver completato lo sviluppo e il test della classe i relativi file Classe.h e Classe.cpp vanno inviati 
+  nel progetto condiviso su GitHub avvisando poi i compagni di gruppo.
+- Quando tutte le classi saranno implementate il compagno che ha il compito di fare il main() del progetto caricherà su GitHub 
+  anche il main.cpp e ogni componente del gruppo proverà il progetto scaricando da GitHub tutte le classi, il file con le domande(domande.txt) e 
+  il main (chi ha fatto un main per provare la classe dovra salvarlo su un'altra cartella prima di scaricare quello del progetto da GitHub)
+- NOTA: il comando break esce dal ciclo corrente (do while, for o anche switch), mentre il comando return esce dalla funzione corrente.
+
+////////////////////////////////////////////////////////////////////////
+// Comandi GitHub
+// Di seguito i comandi di base per usare GitHub, tramite GitBash.
+////////////////////////////////////////////////////////////////////////
+- Caricare sul progetto dentro GitHub un file
+git add "nomefile"
+git commit -m "initial commit"
+git push -u origin master
+
+- Scaricare sul prorpio computer i nuovi file, o i file modificati, caricati dai compagni su GitHub 
+git pull
+
+
+////////////////////////////////////////////////////////////////
+// Migliorie da aggiungere dopo il completamento del progetto
+////////////////////////////////////////////////////////////////
+- Inserimento di un suono differenziato per risposta esatta o sbagliata
+- Testo del montepremi colorato con evidenza del risultato raggiunto  
+...
+
+/////////////////////////////////
+// Classi del progetto
+/////////////////////////////////
+
+Menu, Partita, SerieDomande, Domanda, un solo main
+
+/////////////////////////////////
+// Implementato da RICCARDO
+/////////////////////////////////
+main (){
+  srand((unsigned)time(NULL));
+  Menu m;
+  return 0;
+}
+
+///////////////////////////////////////////
+// Implementato da ???
+// Come aiuto per l'implementazione 
+// vedi le immagini MenuProf0, MenuProf1, MenuProf2, MenuProf3 PNG
+//////////////////////////////////////////
+Class Menu {
+  private: 
+    SerieDomande ld;
+    Partita p;
+  public: 
+   Menu();
+   void visualizza_menu();   
+   void visualizza_record ();   // Legge dal file record.txt (instream) la lista dei risultati delle partite giocate e le visualizza
+   void visualizza_crediti();   // Visualizza i nomi dei progettisti. Una volta mostrati i crediti, bisogna premere Invio per tornare al menu principale.   
+}
+
+Menu :: Menu() : ld(), p(ld){
+  visualizza_menu();
+}
+ 
+Menu :: visualizza_menu(){
+  int scelta;
+  do {
+    system("clear");
+    cout<<"*** CHI VUOL ESSERE MILIONARIO ***"<<endl;<<endl; 
+    cout<<"1) Inizia Gioco"<<endl; 
+    cout<<"2) Aggiungi domanda"<<endl; 
+    cout<<"3) Record"<<endl; 
+    cout<<"4) Crediti"<<endl; 
+    cout<<"5) Esci"<<endl;<<endl;
+    cout<<"Inserisci la scelta: "; 
+    cin>>scelta;   
+    switch(scelta){
+      case 1:
+        p.avvio_partita();
+        break;
+      case 2:
+        ld.aggiungi_domanda();
+        break;
+...
+      case 5:
+        cout<<"Grazie e alla prossima..."<<endl;
+        return;
+      defalut:    
+        cout<<"Scelta non valida, riprova."<<endl; //se il numero non è tra 1 e 5
+        break;
+    }
+  } while(true);
+}
+
+
+
+ 
+/////////////////////////////////
+// Implementato da RICCARDO
+/////////////////////////////////
+Class Partita {
+  private: 
+    SerieDomande domande;
+    string lista_premi_euro[16];
+    int premio_corrente;
+    bool aiuto_casa;    
+    bool aiuto_dimezza_risposte;    
+    bool aiuto_salta_domanda;    
+  public: 
+    Partita (SerieDomande sd);  // valorizza anche la lista dei premi
+    void avvio_partita();       // Avvia la partita
+    void aiuto_da_casa();
+    void salta_domanda();       // incrementa domanda_corrente solo se aiuto_salta_domanda = false e mette aiuto_salta_domanda = true perchè si usa una volta sola
+    void dimezza_risposte();
+    void visualizza_montepremi(); // visualizza la lista di premi nell'attributo lista_premi_euro evidenziando il premio_corrente
+    void salvaPartita(); // Nel caso di risposta affermativa, il gioco deve chiedere il nome al giocatore per poi 
+                         // scrivere, su un file di testo, una riga contenente il nome, il montepremi raggiunto, 
+                         // il numero di aiuti utilizzati. Il gioco,successivamente, deve tornare al menu dove, scegliendo 
+                         // come opzione Record, e possibile visualizzare il file appena modicato.    
+}
+
+Partita :: Partita (SerieDomande sd){
+    domande = sd;
+    aiuto_casa = false;
+    aiuto_dimezza_risposte = false;
+    aiuto_salta_domanda = false;
+    premio_corrente=-1;
+    lista_premi_euro[0] = "1 - 500€";
+    lista_premi_euro[1] = "2 - 1000€";
+    ...
+}
+
+Partita :: avvio_partita (){
+  int scelta=0;
+  domande.carica_domande();
+  do{
+    domande.visualizza_domanda();
+    cout<<"Inserisci risposta. (Inserisci 5 se vuoi un aiuto.)"<<endl;
+    cin>>scelta;   
+    if(scelta>=1 && scelta<=4 ){  // Verifica la risposta
+      if (scelta==domande.getDomandaCorrente().getRispostaCorretta()) {
+        premio_corrente++; // -1 + 1 = 0 (listapremi[0])
+        visualizza_montepremi();
+        // Pausa
+        // incrementa_domanda
+        if (domande.incrementa_domanda() == false){ //sono finite le domande
+          cout<<"Cogratulations! You win"<<endl; 
+          // Pausa (system pause)
+          // Chiedere di salvare la partia 
+          return; // Esce dal metodo
+        }
+      } else {
+        cout<<"Risposta sbagliata."<<endl;
+        // Chiedere di salvare la partia 
+        return; // Esce 
+      }
+    } else if(scelta == 5) {  // Aiuto
+      if(aiuto_dimezza_risposte==false || aiuto_casa==false || aiuto_salta_domanda==false) {
+        string s1 = "Seleziona l'aiuto:";
+        if(aiuto_casa == false) s1 += " 1) Aiuto da casa ";
+        if(aiuto_dimezza_risposte == false) s1 += " 2) Dimezza risposta ";
+        if(aiuto_salta_domanda == false) s1 += " 3) Salta domanda  ";
+        cout<<s1<<endl;
+      
+        int aiuto=0;
+        cin>>aiuto;
+        do {
+          if(aiuto == 1){
+            aiuto_da_casa();
+            break;   // esce dal do while
+          } else if(aiuto == 2){
+            dimezza_risposte();
+            break;
+          } else if(aiuto == 3){
+            if (domande.incrementa_domanda() == false){
+              cout<<"Cogratulations! You win"<<endl; 
+              // Pausa (system pause)
+              // Chiedere di salvare la partia 
+              return; // Esce dal metodo
+            }
+			else break;
+          } else {
+            cout<<"Selezione non valida. Riprova."<<endl;
+          }      
+        }while(true);
+      } else {
+        cout<<"Aiuti esauriti!"<<endl;        
+      }
+      
+    } else {
+      cout<<"Scelta non valida. Riprova."<<endl;
+    }
+  } while(true);  
+}
+
+Partita :: dimezza_risposte (){
+    if (aiuto_dimezza_risposte == true){
+        cout<<"Aiuto già usato";
+    } else {
+       aiuto_dimezza_risposta = true;
+	   //visualizzare l'aiuto indicando la risposta corretta e una delle altre tre
+	   domande.getDomandaCorrente().getRispostaCorretta();
+    }
+    
+}
+
+
+
+//////////////////////////////////////////////////////
+// Implementato da ???
+// Come aiuto per l'implementazione 
+// vedi le immagini ListaDomandeProf0, ListaDomandeProf1, ListaDomandeProf2, ListaDomandeProf3, ListaDomandeProf4 PNG
+//////////////////////////////////////////////////////
+main(){  // Esempio di main per provare la classe
+  SerieDomande dom;
+  dom.carica_domande();
+}
+Class SerieDomande {
+  private:   
+    Domanda lista_domande[16];  // una in più per il salta domanda
+    int domanda_corrente ;
+    bool salta_domanda=false;
+  public: 
+    SerieDomande ();
+    void carica_domande (); // Legge da file tutte le 50 domande e ne inserisce 16, scelte in modo casuale, in lista_domande
+    void setSaltaDomanda (); 
+    bool getSaltaDomanda ();
+    Domanda getDomandaCorrente();     
+    bool incrementa_domanda();  // valorizza domanda_corrente con la posizione della domanda successiva (domandacorrente++), se arriva all'ultima avvisare che la partita è finita. 
+    void aggiungi_domanda (); // scrive su file delle domande una domanda con le relative risposte e risposta corretta da usare nelle partite successive
+    void visualizza_domanda();
+    void visualizza_domande(Domanda d1[], int num_domande);  // Serve ? 
+}  
+
+SerieDomande :: get_domanda_corrente(){
+  return lista_domande[domanda_corrente];
+}
+
+SerieDomande :: visualizza_domanda(){
+  cout<<lista_domande[domanda_corrente].getTestoDomanda()<<endl;<<endl;
+  cout<<lista_domande[domanda_corrente].getRisposta(0);<<endl;
+  cout<<lista_domande[domanda_corrente].getRisposta(1);<<endl;
+  cout<<lista_domande[domanda_corrente].getRisposta(2);<<endl;
+  cout<<lista_domande[domanda_corrente].getRisposta(3);<<endl;<<endl;    
+}
+
+SerieDomande :: incrementa_domanda(){
+    if(domanda_corrente < 16){
+        domanda_corrente++;
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+
+/////////////////////////////////
+// Implementato da ???
+/////////////////////////////////
+Class Domanda {
+  private: 
+    string testo_domanda;
+    string risposte[4];
+    int risposta_corretta;
+     
+  public:  
+    Domanda ();  
+    string getTestoDomanda();
+    string setDomanda(string s);
+    string getRisposta(int num_risposta);
+    string setRisposta(string s, int num_risposta);    
+    void setRispostaCorretta(int r);
+    int getRispostaCorretta();
+}
+
+Domanda: setRispostaCorretta(int r){
+  risposta_corretta = r;
+}
+
+main (){  // Esempio di main per provare la classe
+  Domanda d;
+  d.setDomanda("prima domanda");
+  d.setRisposta("Ris 1",0);
+  d.setRisposta("Ris 2",1);
+  d.setRisposta("Ris 3",2);
+  d.setRisposta("Ris 4",3);  
+  
+  cout<<d.getDomanda();
+}    
+
