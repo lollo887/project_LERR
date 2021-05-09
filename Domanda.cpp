@@ -6,10 +6,13 @@
 using namespace std;
 
 Domanda :: Domanda(){
+	risposte[0] = "1" ;
+	risposte[1] = "2" ;
+	risposte[2] = "3" ;
+	risposte[3] = "4" ;
 }
 
-string Domanda :: getTestoDomanda(){
-	
+string Domanda :: getTestoDomanda(){	
 	return testo_domanda;
 }
 
@@ -24,12 +27,11 @@ string Domanda :: getRisposta(int num_risposta){
 void Domanda :: setRisposta(string s, int num_risposta){
 	risposte[num_risposta] = s;	
 }
-void Domanda :: setRispostaCorretta(int r){
-	
-  risposta_corretta = r;
-  
-}
-int Domanda :: getRispostaCorretta(){
 
+void Domanda :: setRispostaCorretta(int r){	
+  risposta_corretta = r;
+}
+
+int Domanda :: getRispostaCorretta(){
 	return risposta_corretta;
 }

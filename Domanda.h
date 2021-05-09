@@ -4,7 +4,9 @@
 #include<iostream>
 #include<cstdlib>
 #include<string>
+
 using namespace std;
+
 class Domanda{
   private: 
     string testo_domanda;
