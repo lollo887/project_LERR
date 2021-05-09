@@ -53,17 +53,35 @@ void SerieDomande :: carica_domande(){
 
 void SerieDomande:: aggiungi_domanda(){
 	ofstream out;
-	out.open("domande.txt", ios::app);
+	out.open("Domande_complete.txt", ios::app);
 	system("CLS");
-	string s1;
-	int c;
-	cout<<"Inserisci il testo della  domanda"<<endl;
+	string domanda,r1,r2,r3,r4,corretta;
+	
+	cout<<"Inserisci il testo della domanda: ";
 	cin.clear(); 
 	cin.ignore(1);
-	getline(cin,s1);
+	getline(cin,domanda);
 	
-	//da completare
-	cout<<"Da completare"<<endl;
+	cout<<"Inserisci la prima risposta: ";
+	getline(cin,r1);
+	cout<<"Inserisci la seconda risposta: ";
+	getline(cin,r2);
+	cout<<"Inserisci la terza risposta: ";
+	getline(cin,r3);
+	cout<<"Inserisci la quarta risposta: ";
+	getline(cin,r4);
+
+	cout<<"Inserisci il numero della risposta corretta: ";
+	getline(cin,corretta);
+
+    out<<domanda<<endl;
+    out<<r1<<endl;
+    out<<r2<<endl;
+    out<<r3<<endl;
+    out<<r4<<endl;
+    out<<corretta<<endl;
+    
+    out.close();	
 	
 }
 

@@ -91,7 +91,6 @@ void Partita :: avvio_partita (){
         	}
         	else{
         		aiuto_salta_domanda = true;
-        		premio_corrente--;
         		domande.incrementa_num_domande();
 				if (domande.incrementa_domanda() == false){
               		cout<<"Cogratulations! You win"<<endl;
@@ -110,7 +109,8 @@ void Partita :: avvio_partita (){
       } else {
         cout<<"Aiuti esauriti!"<<endl;        
       }
-      
+    } else if (scelta == 6){ // Temporaneo
+      domande.aggiungi_domanda(); 
     } else {
       cout<<"Scelta non valida. Riprova."<<endl;
     }
@@ -145,10 +145,13 @@ void Partita :: dimezza_risposte(){
 }
 
 void Partita :: visualizza_montepremi(){  // visualizza la lista di premi nell'attributo lista_premi_euro evidenziando il premio_corrente
+    int n = domande.get_num_domande()-1;
+    if (aiuto_salta_domanda == true)
+      n--;
 	for(int i=0; i<15; i++){
-		if((domande.get_num_domande()-1)-i == domande.get_domanda_corrente()){
+        if (n-i == premio_corrente) {
 			//evidenziare la riga
-			cout<<"* "<<lista_premi_euro[i]<<" *"<<endl;
+			cout<<"*** "<<lista_premi_euro[i]<<" ***"<<endl;
 		}
 		else{
 			cout<<lista_premi_euro[i]<<endl;
@@ -165,7 +168,10 @@ void Partita :: salvaPartita(){
 			string nomeg;
 			cout<<"Inserire nome giocatore: ";
 			cin>>nomeg;
-			nomeg += " montepremi: " + lista_premi_euro[(domande.get_num_domande()-1)-premio_corrente];
+			int n = domande.get_num_domande()-1;
+			if (aiuto_salta_domanda == true)
+			  n--;
+			nomeg += " montepremi: " + lista_premi_euro[n-premio_corrente];
 			string aiuti = "";
 			if( aiuto_dimezza_risposte == true){
 				aiuti += "dimezza risposta";
