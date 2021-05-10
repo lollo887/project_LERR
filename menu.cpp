@@ -1,10 +1,10 @@
 #include<iostream>
 #include<cstdlib>
+#include<fstream>
 #include"menu.h"
-#include"Partita.h"
 using namespace std;
 
-Menu :: Menu() : ld(), p(ld){
+Menu :: Menu() : ld(), p(){
   visualizza_menu();
 }
  
@@ -12,12 +12,12 @@ void Menu :: visualizza_menu(){
   int opzione;
   do {
     system("clear");
-    cout<<"*** CHI VUOL ESSERE MILIONARIO ***"<<endl;<<endl; 
+    cout<<"*** CHI VUOL ESSERE MILIONARIO ***"<<endl<<endl; 
     cout<<"1) Inizia Gioco"<<endl; 
     cout<<"2) Aggiungi domanda"<<endl; 
     cout<<"3) Record"<<endl; 
     cout<<"4) Crediti"<<endl; 
-    cout<<"5) Esci"<<endl;<<endl;
+    cout<<"5) Esci"<<endl<<endl;
     cout<<"Opzione scelta: "; 
     cin>>opzione;   
     switch(opzione){
@@ -44,7 +44,7 @@ void Menu :: visualizza_menu(){
 }
 void Menu :: visualizza_record(){
 	ifstream in;
-	in.open("risultatipartite.txt")
+	in.open("risultatipartite.txt");
 	string s1;
 	system("clear");
 	while(getline(in,s1)){
