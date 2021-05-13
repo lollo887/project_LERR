@@ -8,7 +8,7 @@
 using namespace std;
 
 SerieDomande :: SerieDomande(){
-	carica_domande();
+	//carica_domande();
 	domanda_corrente = 0;
 	num_domande = 15;
 }
@@ -54,7 +54,7 @@ void SerieDomande :: carica_domande(){
 void SerieDomande:: aggiungi_domanda(){
 	ofstream out;
 	out.open("Domande_complete.txt", ios::app);
-	system("CLS");
+	system("clear");
 	string domanda,r1,r2,r3,r4,corretta;
 	
 	cout<<"Inserisci il testo della domanda: ";

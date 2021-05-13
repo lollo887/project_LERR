@@ -50,15 +50,22 @@ void Menu :: visualizza_record(){
 	while(getline(in,s1)){
 		cout<<s1<<endl;
 	}
+	system("pause");
 	getline(cin,s1);
-};
+}
+
 void Menu :: visualizza_crediti(){
-	system("clear");
 	ifstream in;
 	in.open("crediti.txt");
-	cout<<endl;
-	cout<<"premere INVIO per tornare al menu' iniziale";
-};
+	string s1;
+	system("clear");
+	while(getline(in,s1)){
+		cout<<s1<<endl;
+	}
+	getline(cin,s1);
+	//cout<<"premere INVIO per tornare al menu' iniziale";
+	system("pause");
+}
 
 
 

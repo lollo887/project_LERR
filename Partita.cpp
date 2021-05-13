@@ -10,29 +10,30 @@ Partita :: Partita (){ // valorizza anche la lista dei premi
     aiuto_dimezza_risposte = false;
     aiuto_salta_domanda = false;
     premio_corrente=-1;
-    lista_premi_euro[0] = "15 - €1 MILLION";
-    lista_premi_euro[1] = "14 - €300.000";
-    lista_premi_euro[2] = "13 - €150.000";
-    lista_premi_euro[3] = "12 - €70.000";
-    lista_premi_euro[4] = "11 - €30.000";
-    lista_premi_euro[5] = "10 - €20.000";
-    lista_premi_euro[6] = "9 - €15.000";
-    lista_premi_euro[7] = "8 - €10.000";
-    lista_premi_euro[8] = "7 - €7.000";
-    lista_premi_euro[9] = "6 - €5.000";
-    lista_premi_euro[10] = "5 - €3.000";
-    lista_premi_euro[11] = "4 - €2.000";
-    lista_premi_euro[12] = "3 - €1.500";
-    lista_premi_euro[13] = "2 - €1.000";
-    lista_premi_euro[14] = "1 - €500";
+    lista_premi_euro[0] = "15 - 1 MILLION";
+    lista_premi_euro[1] = "14 - 300.000";
+    lista_premi_euro[2] = "13 - 150.000";
+    lista_premi_euro[3] = "12 - 70.000";
+    lista_premi_euro[4] = "11 - 30.000";
+    lista_premi_euro[5] = "10 - 20.000";
+    lista_premi_euro[6] = "9 - 15.000";
+    lista_premi_euro[7] = "8 - 10.000";
+    lista_premi_euro[8] = "7 - 7.000";
+    lista_premi_euro[9] = "6 - 5.000";
+    lista_premi_euro[10] = "5 - 3.000";
+    lista_premi_euro[11] = "4 - 2.000";
+    lista_premi_euro[12] = "3 - 1.500";
+    lista_premi_euro[13] = "2 - 1.000";
+    lista_premi_euro[14] = "1 - 500";
 }
 
 void Partita :: avvio_partita (){
   int scelta=0;
+  domande.carica_domande();
   bool visualizzaDomanda = true;
   do{
   	if(visualizzaDomanda == true){
-  	  system("CLS");
+  	  system("clear");
   	  domande.visualizza_domanda();
 	}
 	else{
@@ -43,10 +44,16 @@ void Partita :: avvio_partita (){
     if(scelta>=1 && scelta<=4 ){  // Verifica la risposta
       if (scelta==domande.getDomandaCorrente().getRispostaCorretta()) {
         premio_corrente++; // -1 + 1 = 0 (listapremi[0])
-        system("CLS");
+        system("clear");
         visualizza_montepremi();
         if (domande.incrementa_domanda() == false){ //sono finite le domande
-          cout<<"Cogratulations! You win"<<endl;
+          cout<<endl;
+          cout<<"\a\a\a";
+		  cout<<"\e[102m";
+		  cout<<"\e[30m";
+		  cout<<"Cogratulations! You win"<<endl;
+		  cout<<"\e[39m"<<endl;
+		  cout<<"\e[49m"<<endl;
           salvaPartita(); 
           return; // Esce dal metodo
         } else{
@@ -71,7 +78,7 @@ void Partita :: avvio_partita (){
         do {
           if(aiuto == 1){
           	if (aiuto_casa == true){ 
-        		cout<<"Aiuto già usato";
+        		cout<<"Aiuto gia' usato";
         	}
         	else{
             	aiuto_da_casa();
@@ -79,7 +86,7 @@ void Partita :: avvio_partita (){
 			break;   // esce dal do while
           } else if(aiuto == 2){
           	if (aiuto_dimezza_risposte == true){ 
-        		cout<<"Aiuto già usato";
+        		cout<<"Aiuto gia' usato";
         	}
         	else{
             	dimezza_risposte();
@@ -87,13 +94,18 @@ void Partita :: avvio_partita (){
             break;
           } else if(aiuto == 3){
           	if (aiuto_salta_domanda == true){ 
-        		cout<<"Aiuto già usato";
+        		cout<<"Aiuto gia' usato";
         	}
         	else{
         		aiuto_salta_domanda = true;
         		domande.incrementa_num_domande();
 				if (domande.incrementa_domanda() == false){
-              		cout<<"Cogratulations! You win"<<endl;
+					cout<<"\a\a\a";
+					cout<<"\e[102m";
+					cout<<"\e[30m";
+					cout<<"\e[5mCogratulations! You win"<<endl;
+					cout<<"\e[39m"<<endl;
+					cout<<"\e[49m"<<endl;
               		salvaPartita();
               		return; // Esce dal metodo e torna al menu principale
             	}
@@ -124,10 +136,10 @@ void Partita :: aiuto_da_casa(){ // 3 volte su 4 (75% di probabilità che sia giu
 		n = rand()%4;
 	}while(n == domande.getDomandaCorrente().getRispostaCorretta());
 	if (rand()%4 == 1){
-		cout<<"La risposta corretta è la "<<n<<endl;
+		cout<<"La risposta corretta e' la "<<n<<endl;
 	}
 	else{
-		cout<<"La risposta corretta è la "<<domande.getDomandaCorrente().getRispostaCorretta()<<endl;
+		cout<<"La risposta corretta e' la "<<domande.getDomandaCorrente().getRispostaCorretta()<<endl;
 	}
 }
 
@@ -141,7 +153,7 @@ void Partita :: dimezza_risposte(){
 	do{
 		n = rand()%4;
 	}while(n == domande.getDomandaCorrente().getRispostaCorretta());
-    cout<<"La risposta corretta è la "<<domande.getDomandaCorrente().getRispostaCorretta()<<" o la "<<n<<endl; 
+    cout<<"La risposta corretta e' la "<<domande.getDomandaCorrente().getRispostaCorretta()<<" o la "<<n<<endl; 
 }
 
 void Partita :: visualizza_montepremi(){  // visualizza la lista di premi nell'attributo lista_premi_euro evidenziando il premio_corrente
@@ -151,7 +163,10 @@ void Partita :: visualizza_montepremi(){  // visualizza la lista di premi nell'a
 	for(int i=0; i<15; i++){
         if (n-i == premio_corrente) {
 			//evidenziare la riga
-			cout<<"*** "<<lista_premi_euro[i]<<" ***"<<endl;
+			cout<<"\a";
+			cout<<"\e[91m";
+			cout<<"*** "<<lista_premi_euro[i]<<" ***";
+			cout<<"\e[39m"<<endl;
 		}
 		else{
 			cout<<lista_premi_euro[i]<<endl;
