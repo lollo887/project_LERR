@@ -36,9 +36,9 @@ void Menu :: visualizza_menu(){
       case 5:
         cout<<"E' stato un piacere giocare insieme a te, grazie e alla prossima..."<<endl;
         return;
-      defalut:    
+      default:    
         cout<<"Scelta non valida, riprova."<<endl; //se il numero non è tra 1 e 5
-        break;
+    	break;
     }
   } while(true);
 }

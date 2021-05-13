@@ -9,7 +9,7 @@ Partita :: Partita (){ // valorizza anche la lista dei premi
     aiuto_casa = false;
     aiuto_dimezza_risposte = false;
     aiuto_salta_domanda = false;
-    premio_corrente=-1;
+    premio_corrente = -1;
     lista_premi_euro[0] = "15 - 1 MILLION";
     lista_premi_euro[1] = "14 - 300.000";
     lista_premi_euro[2] = "13 - 150.000";
@@ -28,7 +28,8 @@ Partita :: Partita (){ // valorizza anche la lista dei premi
 }
 
 void Partita :: avvio_partita (){
-  int scelta=0;
+  int scelta = 0;
+  premio_corrente = -1; 
   domande.carica_domande();
   bool visualizzaDomanda = true;
   do{
